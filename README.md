@@ -22,7 +22,7 @@ Arduino C++ · Wire / I²C · Adafruit PWM Servo Driver library · Arduino Uno �
 1. Install the **Adafruit PWM Servo Driver** library through Arduino IDE's Library Manager.
 2. Place `robotic_arm_controller.ino` in a folder named `robotic_arm_controller` and open it in Arduino IDE.
 3. Connect the PCA9685 to the Uno over I²C, with a common ground and a suitable external servo supply. Check the driver and servo voltage specifications before powering the arm.
-4. Review channel assignments, home angles, and pulse limits for your assembly. The sketch starts every channel at 90 degrees.
+4. Review channel assignments, home angles, and pulse limits for your assembly. The sketch starts every channel at 90 degrees. On power-up or reset, startup writes each channel's 90-degree target directly, with 200 ms between channels; it does not use the smooth-motion routine. Position the arm safely before startup, since these initial commands may cause abrupt motion.
 5. Select the Arduino Uno and its port, then upload the sketch.
 6. Open the Serial Monitor at **9600 baud** with **Newline** selected.
 
