@@ -1,6 +1,5 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
-#include <math.h>
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
