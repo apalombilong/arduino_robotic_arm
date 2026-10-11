@@ -26,6 +26,7 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 // Bigger delay = slower / smoother / less jolting
 #define SERVO_STEP_DELAY 20
 
+// Commanded positions tracked in software; the controller receives no servo feedback.
 int servoAngles[NUM_SERVOS] = {90, 90, 90, 90, 90, 90};
 
 // ─── Pulse conversion ─────────────────────────────────────────
