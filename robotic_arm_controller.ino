@@ -3,6 +3,7 @@
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
+// PCA9685 pulse-count endpoints used to map 0-180 degrees; calibrate for the attached servos.
 #define SERVOMIN 150
 #define SERVOMAX 600
 #define NUM_SERVOS 6
