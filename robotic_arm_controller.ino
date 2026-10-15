@@ -36,6 +36,19 @@ int angleToPulse(int angle) {
   return map(angle, 0, 180, SERVOMIN, SERVOMAX);
 }
 
+// ─── Input validation ─────────────────────────────────────────
+
+bool isUnsignedInteger(const String &value) {
+  if (value.length() == 0) return false;
+
+  for (unsigned int i = 0; i < value.length(); i++) {
+    char character = value.charAt(i);
+    if (character < '0' || character > '9') return false;
+  }
+
+  return true;
+}
+
 // ─── Instant raw set ──────────────────────────────────────────
 
 void setServoAngleInstant(int channel, int angle) {
@@ -180,6 +193,13 @@ void loop() {
 
     String channelStr = input.substring(0, spaceIndex);
     String angleStr   = input.substring(spaceIndex + 1);
+    channelStr.trim();
+    angleStr.trim();
+
+    if (!isUnsignedInteger(channelStr) || !isUnsignedInteger(angleStr)) {
+      Serial.println("Invalid command. Channel and angle must be whole numbers.");
+      return;
+    }
 
     int channel = channelStr.toInt();
     int angle   = angleStr.toInt();

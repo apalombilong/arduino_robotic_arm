@@ -8,7 +8,7 @@ Serial command software for a six-servo robotic arm built for ECE 5 at UC Santa 
 
 - **Command interface:** select a servo channel and target angle through the Serial Monitor.
 - **Incremental motion:** step one degree at a time with a configurable delay.
-- **Input bounds:** reject channels outside 0–5 and angles outside 0–180.
+- **Input validation:** reject malformed numeric fields, channels outside 0–5, and angles outside 0–180.
 - **State tracking:** store the latest commanded angle for each servo.
 - **Homing:** return all six channels to configured home angles in sequence.
 - **PWM mapping:** convert requested angles into configurable pulse counts.
@@ -49,7 +49,7 @@ Arduino C++ · Wire / I²C · Adafruit PWM Servo Driver library · Arduino Uno �
 
 `moveServoSmooth()` moves one channel at a time using one-degree steps. The default `SERVO_STEP_DELAY` is 20 ms per degree. PWM frequency is set to 60 Hz, and `SERVOMIN` / `SERVOMAX` define pulse mapping endpoints.
 
-The controller is open loop: stored angles represent software commands, not measured joint positions. Motion uses blocking delays, so new commands wait while a movement completes. Numeric parsing uses Arduino `String::toInt()`; range checks are present, but malformed numeric text is not strictly validated. The published sketch implements manual commands and homing; it does not implement inverse kinematics or autonomous pick-and-place.
+The controller is open loop: stored angles represent software commands, not measured joint positions. Motion uses blocking delays, so new commands wait while a movement completes. Command input requires decimal digits for both the channel and angle before range checks are applied. The published sketch implements manual commands and homing; it does not implement inverse kinematics or autonomous pick-and-place.
 
 ## Project files
 
