@@ -201,19 +201,21 @@ void loop() {
       return;
     }
 
-    int channel = channelStr.toInt();
-    int angle   = angleStr.toInt();
+    // Keep parsed values as long until after range checks. On AVR boards,
+    // converting a large value to 16-bit int first can wrap into a valid range.
+    long channelValue = channelStr.toInt();
+    long angleValue   = angleStr.toInt();
 
-    if (channel < 0 || channel >= NUM_SERVOS) {
+    if (channelValue < 0 || channelValue >= NUM_SERVOS) {
       Serial.println("Invalid channel. Use 0-5.");
       return;
     }
 
-    if (angle < 0 || angle > 180) {
+    if (angleValue < 0 || angleValue > 180) {
       Serial.println("Invalid angle. Use 0-180.");
       return;
     }
 
-    setDirectAngle(channel, angle);
+    setDirectAngle((int)channelValue, (int)angleValue);
   }
 }
