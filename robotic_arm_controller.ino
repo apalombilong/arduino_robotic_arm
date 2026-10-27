@@ -49,6 +49,21 @@ bool isUnsignedInteger(const String &value) {
   return true;
 }
 
+bool parseUnsignedWithinRange(const String &value, int maxValue, int &result) {
+  int parsedValue = 0;
+
+  for (unsigned int i = 0; i < value.length(); i++) {
+    int digit = value.charAt(i) - '0';
+
+    // Reject the value before multiplication could exceed the allowed range.
+    if (parsedValue > (maxValue - digit) / 10) return false;
+    parsedValue = parsedValue * 10 + digit;
+  }
+
+  result = parsedValue;
+  return true;
+}
+
 // ─── Instant raw set ──────────────────────────────────────────
 
 void setServoAngleInstant(int channel, int angle) {
@@ -201,21 +216,19 @@ void loop() {
       return;
     }
 
-    // Keep parsed values as long until after range checks. On AVR boards,
-    // converting a large value to 16-bit int first can wrap into a valid range.
-    long channelValue = channelStr.toInt();
-    long angleValue   = angleStr.toInt();
+    int channel;
+    int angle;
 
-    if (channelValue < 0 || channelValue >= NUM_SERVOS) {
+    if (!parseUnsignedWithinRange(channelStr, NUM_SERVOS - 1, channel)) {
       Serial.println("Invalid channel. Use 0-5.");
       return;
     }
 
-    if (angleValue < 0 || angleValue > 180) {
+    if (!parseUnsignedWithinRange(angleStr, 180, angle)) {
       Serial.println("Invalid angle. Use 0-180.");
       return;
     }
 
-    setDirectAngle((int)channelValue, (int)angleValue);
+    setDirectAngle(channel, angle);
   }
 }
