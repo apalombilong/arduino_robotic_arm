@@ -55,8 +55,11 @@ bool parseUnsignedWithinRange(const String &value, int maxValue, int &result) {
   for (unsigned int i = 0; i < value.length(); i++) {
     int digit = value.charAt(i) - '0';
 
-    // Reject the value before multiplication could exceed the allowed range.
-    if (parsedValue > (maxValue - digit) / 10) return false;
+    // Compare quotient and remainder before multiplying to avoid overflow.
+    if (parsedValue > maxValue / 10 ||
+        (parsedValue == maxValue / 10 && digit > maxValue % 10)) {
+      return false;
+    }
     parsedValue = parsedValue * 10 + digit;
   }
 
