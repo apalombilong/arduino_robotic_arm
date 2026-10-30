@@ -24,7 +24,7 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 #define EXTRA1_HOME     90
 #define EXTRA2_HOME     90
 
-// Bigger delay = slower / smoother / less jolting
+// Delay between one-degree steps; larger values slow the commanded motion.
 #define SERVO_STEP_DELAY 20
 
 // Commanded positions tracked in software; the controller receives no servo feedback.
